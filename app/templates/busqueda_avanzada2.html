@@ -1,0 +1,115 @@
+<head>
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+</head>
+
+{% extends "base.html" %}
+
+{% block app_content %}
+
+
+	<script>
+		$(img_bandera).ready(function(){
+			var bandera = 'static/banderas/' + '{{ txt['sesion_leng'] }}' + '.png'
+			document.getElementById('img_bandera').src = bandera ;
+		});
+	</script>
+	
+
+		
+	<div class="pager" style="color:gray; font-size:12px">
+		<form name="busqueda_av" id="busqueda_av" acction="" method="GET">
+			<div style="float:left; padding-right:25px; text-align:left; width:50%">
+				<h2> en Archive.org </h2>
+				
+				<div style="float:left; padding-right:10px; text-align:left; width:50%">
+					<h4> Vistas </h4>
+					<p>[1 : 10]</p>
+				</div>
+				
+				<div style="float:left; padding-left:10px; text-align:left; width:50%">
+					<h4> Stars </h4>
+					<p>[1 : 10]</p>
+				</div>
+				
+				<div style="float:left; padding-right:10px; text-align:left; width:50%">
+					<h4> Comment </h4>
+					<p>[1 : 10]</p>			
+				</div>
+
+			</div>
+			
+			<div style="float:left; padding-left:25px; text-align:left; width:50%">
+				<h2> en Retogaming</h2>
+				
+				<div style="float:left; padding-right:10px; text-align:left; width:50%">
+					<h4> Media </h4>
+					<p>[1 : 10]</p>
+				</div>
+				
+				<div style="float:left; padding-left:10px; text-align:left; width:50%">
+					<h4> Jugados  </h4>
+					<p style="color: #BDBDBD">entre <span id="min_jgd_valor"></span> y <span id="max_jgd_valor"></span> </p>
+					
+					<div>
+						<p style="font-size:10px; text-align:right; color: #BDBDBD"> <span id="au"></span> mínimo: [<span id="min_jgd_min"></span> : <span id="min_jgd_max"></span>]</p>
+					</div>
+					<div>
+						<p style="font-size:10px; text-align:right; color: #BDBDBD">máximo: [<span id="max_jgd_min"></span> : <span id="max_jgd_max"></span>]</p>
+					</div>
+					
+					<div style="width:250px">
+						<div id="barra_min" style="float:left; width:50px">
+							<input id="min_jgd" type="range" value="10" min="10" max="1000">
+						</div>
+						<div id="barra_max" style="float:left; width:200px">
+							<input id="max_jgd" type="range" value="1000" min="10" max="1000">
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</form>
+		
+	</div>
+		
+		
+	<script>
+		document.getElementById("min_jgd_valor").innerHTML = document.getElementById("min_jgd").value;
+		document.getElementById("min_jgd_min").innerHTML = document.getElementById("min_jgd").value;
+		document.getElementById("min_jgd_max").innerHTML = document.getElementById("max_jgd").value;
+		
+		document.getElementById("max_jgd_valor").innerHTML = document.getElementById("max_jgd").value;	
+		document.getElementById("max_jgd_min").innerHTML = document.getElementById("min_jgd").value;
+		document.getElementById("max_jgd_max").innerHTML = document.getElementById("max_jgd").value;
+		
+
+		document.getElementById("min_jgd").oninput = function() {
+
+			var aumento = 10 / (document.getElementById("min_jgd").max - document.getElementById("min_jgd").min);
+			//var aumento = int((this.value - document.getElementById("min_jgd").min) / (document.getElementById("min_jgd").max - document.getElementById("min_jgd").min));
+			//if (aumento > 0){
+			//aumento = document.getElementById("barra_min").style.width * int(aumento * 100);
+			aumento = 10;
+			document.getElementById("barra_min").style.width = (document.getElementById("barra_min").offsetWidth + aumento) + 'px';
+			document.getElementById("barra_max").style.width = (document.getElementById("barra_max").offsetWidth - aumento) + 'px';
+			//}
+			
+			document.getElementById("max_jgd").min = this.value;
+			document.getElementById("min_jgd_valor").innerHTML = this.value;
+			document.getElementById("au").innerHTML = document.getElementById("barra_min").style.width;
+			document.getElementById("min_jgd_min").innerHTML = this.value;
+			document.getElementById("max_jgd_min").innerHTML = this.value;
+
+		}
+		
+		document.getElementById("max_jgd").oninput = function() {
+			document.getElementById("min_jgd").max = this.value;
+			document.getElementById("max_jgd_valor").innerHTML = this.value;
+			document.getElementById("min_jgd_max").innerHTML = this.value;
+			document.getElementById("max_jgd_max").innerHTML = this.value;
+
+		}
+		
+	</script>
+	
+{% endblock %}

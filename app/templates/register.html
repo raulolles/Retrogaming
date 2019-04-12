@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block menu %}
+	{% include 'menu.html' %}
+{% endblock %}
+
+{% block app_content %}
+
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+	
+	<script>
+		$(img_bandera).ready(function(){
+			var bandera = 'static/banderas/' + '{{ txt['sesion_leng'] }}' + '.png'
+			document.getElementById('img_bandera').src = bandera ;
+		});
+	</script>
+		
+	<script type="text/javascript">
+		function cambiaFoto(direccion){
+			var nFoto = $('#avatar').val();
+			
+			if ((nFoto > 1 && direccion == 'dc') || (nFoto < 30 && direccion == 'iz')) {
+				if (direccion == 'iz') {
+					nFoto++;
+				}
+				else {
+					nFoto--;
+				}
+				
+				if (nFoto-2 <= 0){
+					document.getElementById('foto1').src = "static/avatares/circulo.png";
+				}
+				else {
+					document.getElementById('foto1').src = "static/avatares/img" + (nFoto-2) + ".png";
+				}
+				if (nFoto-1 <= 0){
+					document.getElementById('foto2').src = "static/avatares/circulo.png";
+				}
+				else {
+					document.getElementById('foto2').src = "static/avatares/img" + (nFoto-1) + ".png";
+				}
+				
+				document.getElementById('foto3').src = "static/avatares/img" + (nFoto) + ".png";
+				
+				if (nFoto+1 >= 31){
+					document.getElementById('foto4').src = "static/avatares/circulo.png";
+				}
+				else {
+					document.getElementById('foto4').src = "static/avatares/img" + (nFoto+1) + ".png";
+				}
+				if (nFoto+2 >= 31){
+					document.getElementById('foto5').src = "static/avatares/circulo.png";
+				}
+				else {
+					document.getElementById('foto5').src = "static/avatares/img" + (nFoto+2) + ".png";
+				}
+
+				$('#avatar').val(nFoto);
+			}
+		}
+		
+		function cambiaFotoIz(){
+			cambiaFoto('iz');
+		}
+		
+		function cambiaFotoDc(){
+			cambiaFoto('dc');
+		}		
+		
+	</script>
+	
+	<script>
+		$(document).ready(function(){
+			document.querySelector('#submit').value = '{{ txt['pg_reg_registrar'] }}' ;
+			if ($('#error_user').length != 0) {
+				document.querySelector('#error_user').innerHTML  = '{{ txt['pg_reg_error_user'] }}' ;
+			}
+			if ($('#error_email').length != 0) {
+				document.querySelector('#error_email').innerHTML  = '{{ txt['pg_reg_error_email'] }}' ;
+			}
+			if ($('#error_contr2').length != 0) {
+				document.querySelector('#error_contr2').innerHTML  = '{{ txt['pg_reg_error_contrasena_rep'] }}' ;
+			}
+			if ($('#error_contr').length != 0) {
+				document.querySelector('#error_contr').innerHTML  = '{{ txt['pg_reg_error_contrasena'] }}' ;
+			}
+		});
+	</script>
+	
+	<div>
+		<h2 style="width:500px; height:100px; text-align:center; margin: 0 auto"> {{ txt['pg_reg_registro'] }}</h2>
+			
+		<div id="lineaFotos" style="width:500px; height:150px; text-align:center; margin: 0 auto; padding-left:55px">
+			<button id="btn1" type="button" style="margin:15px; float:left; width:8%" class="btn btn-default" aria-label="Left Align" onClick="cambiaFotoIz()">
+				<span class="glyphicon glyphicon-chevron-left" style="color:#C0C0C0" aria-hidden="true"></span>
+			</button>
+			<div style="float:left; width:8%; opacity:0.3">
+				<img id="foto1" src="{{url_for('static', filename="avatares/img11.png")}}" width="40" height="40" alt="user avatar"/>
+			</div>
+			<div style="float:left; width:12%; opacity:0.5">
+				<img id="foto2" src="{{url_for('static', filename="avatares/img12.png")}}" width="60" height="60" alt="user avatar"/>
+			</div>
+			<div style="float:left; width:20%; border-bottom:7px solid #088A85">
+				<img id="foto3" src="{{url_for('static', filename="avatares/img13.png")}}" width="100" height="100" alt="user avatar"/>
+			</div>
+			<div style="float:left; width:12%; opacity:0.5">
+				<img id="foto4" src="{{url_for('static', filename="avatares/img14.png")}}" width="60" height="60" alt="user avatar"/>
+			</div>
+			<div style="float:left; width:8%; opacity:0.3">
+				<img id="foto5" src="{{url_for('static', filename="avatares/img15.png")}}" width="40" height="40" alt="user avatar"/>
+			</div>		
+			<button id="btn1" type="button" style="margin:15px; float:left; width:8%" class="btn btn-default" aria-label="Left Align" onClick="cambiaFotoDc()">
+				<span class="glyphicon glyphicon-chevron-right" style="color:#C0C0C0" aria-hidden="true"></span>
+			</button>		
+		</div>
+		
+		<div style="width:500px; height:300px; text-align:center; margin: 0 auto">
+			<form action="" method="post">
+				{{ form.hidden_tag() }}
+				<p style="display:none">
+					{{ form.avatar.label }}<br>
+					{{ form.avatar(size=32) }}<br>
+				</p>
+				<p>
+					<span style="font-weight:bold; font-size:15px">  {{ txt['pg_reg_usuario'] }}</span> <br>
+					{{ form.username(size=32) }}<br>
+					{% for error in form.username.errors %}
+					<span id="error_user" style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+				</p>
+				<p>
+					<span style="font-weight:bold; font-size:15px">  {{ txt['pg_reg_email'] }}</span> <br>
+					{{ form.email(size=32) }}<br>
+					{% for error in form.email.errors %}
+					<span id="error_email" style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+				</p>
+				<p>
+					<span style="font-weight:bold; font-size:15px">  {{ txt['pg_reg_contrasena'] }}</span> <br>
+					{{ form.password(size=32) }}<br>
+					{% for error in form.password.errors %}
+					<span id="error_contr" style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+				</p>
+				<p>
+					<span style="font-weight:bold; font-size:15px">  {{ txt['pg_reg_repe_contr'] }}</span> <br>
+					{{ form.password2(size=32) }}<br>
+					{% for error in form.password2.errors %}
+					<span id="error_contr2" style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+				</p>
+				<br>
+				<p id='submit2'>{{ form.submit() }}</p>
+			</form>
+		</div>
+		
+	</div>
+		
+{% endblock %}

@@ -1,0 +1,119 @@
+	{% for seleccion in selecciones %}
+
+	<div style="float:left; width:100%; height:70px; vertical-align:bottom">
+		<hr/>
+		<h3> {{ seleccion.filtro }} </h3>
+	</div>
+	
+	{% if seleccion.select|count == 0%}
+		<div style="width:1000px; height:300px; margin-top:100px; font-size:18px; color:gray">
+			{{ txt['pg_ind_no_resultados'] }}
+		</div>	
+	{% endif %}
+	
+    {% for juego in seleccion.select %}		
+
+		<div style = "float:left; color:gray; width:550px; height:150px; margin-top:15px; margin-right:20px; box-shadow: 3px 3px 6px gray">
+		
+			<div id="juego{{juego[15]}}" >
+			
+				<div style="width:100px; height:150px; float:left">
+					<a href="http://archive.org/details/{{ juego[5] }}" target="iframe_a" onClick="muestraJuego({{juego[15]}}, {{selecciones}})">
+						<img style="width:100px; height:150px" src="http://archive.org/services/img/{{ juego[5] }}" alt="juego {{ juego[5] }}">
+					</a>
+				</div>
+				
+				<div style="width:150px; height:150px; float:left; margin-left:25px; margin-top:10px; margin-bottom:5px" >
+					<div style="height:55%">
+						<div>
+							<a href="http://archive.org/details/{{ juego[5] }}" target="iframe_a" onClick="muestraJuego({{juego[15]}}, {{selecciones}})"> 
+							{{ juego[0] }} </a>
+						</div>
+						<div style = "font-size:10px">
+							by {{ juego[1] }}
+						</div>
+					</div>
+					
+					<div style = "font-size:9px; text-align:center; height:45%; color:gray">
+						<div style="margin-bottom:10px; text-align:left">
+							<a href="http://archive.org/details/{{ juego[5] }}" target="_blank" style="font-size:9px"> {{ txt['tira_juego_juega'] }} </a>
+						</div>
+						<div style = "width: 25%; float:left">
+							<img src="{{url_for('static', filename="simbolos/disk.png")}}" width="18" height="18" alt="software"/>
+						</div>
+						<div style = "width: 25%; float:left">
+							<img src="{{url_for('static', filename="simbolos/eye.png")}}" width="12" height="12" alt="eyes"/>
+							<p> {{ juego[2] }} <p>
+						</div>
+						<div style = "width: 25%; float:left">
+							<img src="{{url_for('static', filename="simbolos/star.png")}}" width="10" height="10" alt="stars"/>
+							<p> {{ juego[3] }} <p>
+						</div>
+						<div style = "width: 25%; float:right">
+							<img src="{{url_for('static', filename="simbolos/comment.png")}}" width="12" height="10" alt="comments"/>
+							<p> {{ juego[4] }} <p>
+						</div>					
+					</div>
+				</div>				
+					
+					
+				<div style = "font-size:9px; width:210px; height:140px; float:left; margin-top:5px; margin-bottom:5px; margin-left:40px; padding-left:40px; border-left:1px solid #E8E8E8">
+					<div style="height:70%">
+						<div style = "vertical-align:top; width:50%; float:left; padding-right:7px; text-align:center">
+							<div id="mediaJuego" style= "vertical-align:top; height:42px; font-size:35px; color:#e67e22; text-shadow: -1px 0 gray, 0 1px gray,
+		1px 0 gray, 0 -1px gray">  {{ juego[6] }}
+							</div>
+							<img src="static/{{ juego[7] }}" width="100%" alt="stars media"/>
+							<div style = "margin-top:10px; vertical-align:top">
+								<img style = "vertical-align:top; width:9px; height:9px" src="{{url_for('static', filename="simbolos/user.png")}}" alt="total users"/> 
+								<span id="nUsersPlayJuego"> {{ juego[8] }}  </span>
+							</div>
+						</div>
+						
+						<div style = "width:45%; float:right; padding-left:20px; padding-top:9px">
+							<img style = "vertical-align:top" src="{{url_for('static', filename="simbolos/star_cinco.png")}}" width="80%" alt="cinco estrellas"/> 
+							<span id="5StarsJuego">{{ juego[9] }} </span>							
+							<img style = "vertical-align:top" src="{{url_for('static', filename="simbolos/star_cuatro.png")}}" width="80%" alt="cuatro estrellas"/> 
+							<span id="4StarsJuego">{{ juego[10] }} </span>
+							<img style = "vertical-align:top" src="{{url_for('static', filename="simbolos/star_tres.png")}}" width="80%" alt="tres estrellas"/> 
+							<span id="3StarsJuego">{{ juego[11] }} </span>
+							<img style = "vertical-align:top" src="{{url_for('static', filename="simbolos/star_dos.png")}}" width="80%" alt="dos estrellas"/> 
+							<span id="2StarsJuego">{{ juego[12] }} </span>
+							<img style = "vertical-align:top" src="{{url_for('static', filename="simbolos/star_uno.png")}}" width="80%" alt="una estrella"/> 
+							<span id="1StarsJuego">{{ juego[13] }} </span>
+						</div>
+					</div>
+					
+					{% if current_user.is_authenticated %}
+					<div style = "font-size:11px; height:30%">
+						<div style = "width:70%; padding-top:11px; padding-left:9px; float:left; color:#2980B9">
+							{{ txt['tira_juego_tu_valoracion'] }}
+						</div>					
+						<div style = "width:30%; float:right; padding-right:7px; text-align:right; font-size:25px; color:#e67e22">
+							<form name="form{{juego[15]}}" id="form{{juego[15]}}" acction="" method="GET">
+								<input type="text" name="page" id="page" value="{{ pag }}" style="display:none">
+								<input type="text" name="jg_ifrm" id="jg_ifrm" value="" style="display:none">
+								<input type="text" name="juego" id="juego" value="{{ juego[15] }}" style="display:none">
+								<input type="text" name="user" id="user" value="{{ juego[16] }}" style="display:none">
+								<select onchange="this.form.submit()" name="valor" id="valor{{ juego15 }}" style="border:none">
+									<option {% if juego[14] == 0 %} selected {%endif%} value="0">--</option>
+									<option {% if juego[14] == 1 %} selected {%endif%}>1</option>
+									<option {% if juego[14] == 2 %} selected {%endif%}>2</option>
+									<option {% if juego[14] == 3 %} selected {%endif%}>3</option>
+									<option {% if juego[14] == 4 %} selected {%endif%}>4</option>
+									<option {% if juego[14] == 5 %} selected="selected" {%endif%}>5</option>
+								</select>
+							</form>						
+						</div>
+					</div>	
+					{% endif %}
+				
+				</div>
+			
+			</div>
+		</div>
+		
+    {% endfor %}
+
+    {% endfor %}
+	

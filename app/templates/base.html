@@ -1,0 +1,32 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}
+    {% if title %}{{ title }} - Retrogaming{% else %}Retrogaming{% endif %}
+{% endblock %}
+
+{% block content %}
+
+	{% block menu %}
+	
+ 	{% endblock %} 
+	
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div id="men_error_base" class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% block app_content %}
+
+		{% endblock %}		
+    </div>
+	
+	<footer style = "background-color: #f8f8f8; color:gray; margin-top:50px; padding: 20px; font-family:Courier; font-size:10pt">
+		Proyecto TFG_GII_O_MA_18.08   -   Grado Ingeniería Informática   -   Universidad de Burgos
+	</footer>
+	
+{% endblock %}
+

@@ -1,0 +1,107 @@
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ url_for('index') }}">Retrogaming</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    {% if current_user.is_anonymous %}
+                    <li><a href="{{ url_for('index') }}"> {{ txt['menu_inicio'] }}  </a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('index') }}"> {{ txt['menu_inicio'] }} </a></li>
+					<li><a href="{{ url_for('favoritos') }}"> {{ txt['menu_favoritos'] }} </a></li>
+					
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						  {{ txt['menu_en_retrogaming'] }}  <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+						</a>
+						
+						<div class="dropdown-menu" style="color:#2980B9" aria-labelledby="navbarDropdownMenuLink1">
+						  <p style="background-color:#fafafa; padding:10px"> {{ txt['menu_todos_juegos'] }} </p>
+						  <p><a style="color:gray; padding:5px; padding-left:15px" class="dropdown-item" href="{{ url_for('mas_jugados_todos') }}"> {{ txt['menu_mas_jugados'] }} </a></p>
+						  <p><a style="color:gray; padding:5px; padding-left:15px" class="dropdown-item" href="{{ url_for('mejor_valorados_todos') }}"> {{ txt['menu_mejor_valorados'] }}  </a></p>
+						  
+						  <p style="border-top:1px solid #E8E8E8; background-color:#fafafa; padding:10px"> {{ txt['menu_ya_jugados'] }} </p>
+						  <p><a style="color:gray; padding:5px; padding-left:15px" class="dropdown-item" href="{{ url_for('mas_jugados_ya_jugado') }}">{{ txt['menu_mas_jugados'] }}</a></p>
+						  <p><a style="color:gray; padding:5px; padding-left:15px" class="dropdown-item" href="{{ url_for('mejor_valorados_ya_jugado') }}">{{ txt['menu_mejor_valorados'] }}</a></p>
+						  
+						  <p style="border-top:1px solid #E8E8E8; background-color:#fafafa; padding:10px">{{ txt['menu_no_has_jugado'] }}</p>						  
+						  <p><a style="color:gray; padding:5px; padding-left:15px" class="dropdown-item" href="{{ url_for('mas_jugados_no_jugado') }}">{{ txt['menu_mas_jugados'] }}</a></p>
+						  <p><a style="color:gray; padding:5px; padding-left:15px" class="dropdown-item" href="{{ url_for('mejor_valorados_no_jugado') }}">{{ txt['menu_mejor_valorados'] }}</a></p>						  
+						</div>
+					</li>					
+					
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						  {{ txt['menu_en_archive'] }}  <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+						</a>
+						
+						<div class="dropdown-menu" style="color:#2980B9" aria-labelledby="navbarDropdownMenuLink2">
+						  <p style="background-color:#fafafa; padding:10px"> {{ txt['menu_todos_juegos'] }} </p>
+						  <p><a style="color:gray; padding:5px; padding-left:15px" class="dropdown-item" href="{{ url_for('mas_vistos_archive_todos') }}"> {{ txt['menu_mas_vistos'] }} </a></p>
+						  <p><a style="color:gray; padding:5px; padding-left:15px" class="dropdown-item" href="{{ url_for('mas_stars_archive_todos') }}"> {{ txt['menu_mas_stars'] }} </a></p>
+						  <p><a style="color:gray; padding:5px; padding-left:15px" class="dropdown-item" href="{{ url_for('mas_comments_archive_todos') }}"> {{ txt['menu_mas_comments'] }} </a></p>
+						  
+						  <p style="border-top:1px solid #E8E8E8; background-color:#fafafa; padding:10px"> {{ txt['menu_ya_jugados'] }} </p>
+						  <p><a style="color:gray; padding:5px; padding-left:15px" class="dropdown-item" href="{{ url_for('mas_vistos_archive_ya_jugado') }}">{{ txt['menu_mas_vistos'] }}</a></p>
+						  <p><a style="color:gray; padding:5px; padding-left:15px" class="dropdown-item" href="{{ url_for('mas_stars_archive_ya_jugado') }}">{{ txt['menu_mas_stars'] }}</a></p>
+						  <p><a style="color:gray; padding:5px; padding-left:15px" class="dropdown-item" href="{{ url_for('mas_comments_archive_ya_jugado') }}">{{ txt['menu_mas_comments'] }}</a></p>
+						  
+						  <p style="border-top:1px solid #E8E8E8; background-color:#fafafa; padding:10px"> {{ txt['menu_no_has_jugado'] }} </p>
+						  <p><a style="color:gray; padding:5px; padding-left:15px" class="dropdown-item" href="{{ url_for('mas_vistos_archive_no_jugado') }}">{{ txt['menu_mas_vistos'] }}</a></p>
+						  <p><a style="color:gray; padding:5px; padding-left:15px" class="dropdown-item" href="{{ url_for('mas_stars_archive_no_jugado') }}">{{ txt['menu_mas_stars'] }}</a></p>
+						  <p><a style="color:gray; padding:5px; padding-left:15px" class="dropdown-item" href="{{ url_for('mas_comments_archive_no_jugado') }}">{{ txt['menu_mas_comments'] }}</a></p>					  
+						</div>
+
+					</li>
+					
+					<li><a href="{{ url_for('busqueda_avanzada') }}">{{ txt['menu_busq_avan'] }}</a></li>
+				
+		
+                    {% endif %}
+                </ul>
+				
+                <ul class="nav navbar-nav navbar-right">
+                    {% if current_user.is_anonymous %}
+					<li>
+						<img id="img_bandera" style="margin-top:5px; margin-left:5px; height:18px" src="{{url_for('static', filename="avatares/circulo.png")}}" alt="bandera"/>
+						<form name="lenguaje" id="form_lenguaje1" acction="" method="GET">
+							<select  onchange="this.form.submit()" name="leng_cambio" id="leng_cambio" style="font-size:12px; color:gray; background-color: #f8f8f8; border:none">
+								<option {% if session['lenguaje'] == 'es' %} selected {%endif%} value="es">es</option>
+								<option {% if session['lenguaje'] == 'en' %} selected {%endif%} value="en">en</option>
+								<option {% if session['lenguaje'] == 'fr' %} selected {%endif%} value="fr">fr</option>
+								<option {% if session['lenguaje'] == 'rm' %} selected {%endif%} value="rm">rm</option>
+							</select>
+						</form>	
+					</li>
+					
+                    <li><a href="{{ url_for('login') }}">{{ txt['menu_login'] }}</a></li>
+                    {% else %}
+					<li>
+						<form class="navbar-form navbar-left" method="get" action="{{ url_for('busqueda') }}">
+							<input class="form-control mr-sm-2" placeholder={{ txt['menu_busqueda'] }} type="text" name="q" id="q">
+						</form>
+					</li>
+					<li>
+						<img id="img_bandera" style="margin-top:8px; margin-left:5px; height:18px" src="{{url_for('static', filename="avatares/circulo.png")}}" alt="bandera"/>
+						<form name="lenguaje" id="form_lenguaje1" acction="" method="GET">
+							<select  onchange="this.form.submit()" name="leng_cambio" id="leng_cambio" style="font-size:12px; color:gray; background-color: #f8f8f8; border:none">
+								<option {% if session['lenguaje'] == 'es' %} selected {%endif%} value="es">es</option>
+								<option {% if session['lenguaje'] == 'en' %} selected {%endif%} value="en">en</option>
+								<option {% if session['lenguaje'] == 'fr' %} selected {%endif%} value="fr">fr</option>
+								<option {% if session['lenguaje'] == 'rm' %} selected {%endif%} value="rm">rm</option>
+							</select>
+						</form>	
+					</li>
+					<li><a href="{{ url_for('logout') }}">{{ txt['menu_logout'] }}</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>

@@ -1,0 +1,338 @@
+<head>
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+	
+	<link href='https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/13.0.0/nouislider.min.css' rel="stylesheet">
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/13.0.0/nouislider.js'></script>
+	
+</head>
+
+{% extends "base.html" %}
+
+{% block menu %}
+	{% include 'menu.html' %}
+{% endblock %}
+
+{% block app_content %}
+
+	<script>
+		$(img_bandera).ready(function(){
+			var bandera = 'static/banderas/' + '{{ txt['sesion_leng'] }}' + '.png'
+			document.getElementById('img_bandera').src = bandera ;
+		});
+	</script>
+	
+	
+	<div style="height:60px">
+		<div style="float:left"><img src="{{url_for('static', filename="avatares/" + current_user.avatar + ".png")}}" width="70" height="70" alt="user avatar"/></div>
+		<div style="float:left"> <h2>{{ txt['saludo'] }} {{ current_user.username }}</h2> </div>
+		<div style="float:right; color:gray"> <h3><i> {{ texto_cab }} </i></h3> </div>
+    </div>
+	<hr/>
+
+		
+	<div style="font-size:12px">
+		<form name="busqueda_av" id="busqueda_av" acction="" method="GET">
+		
+			<div style="float:left; margin-right:25px; text-align:left; width:500px; height:300px">
+				<h3> {{ txt['pg_bsq_avan_en_archive'] }} </h3>
+				<hr/>
+				
+				<div style="width:500px; height:60px; display:flex; align-items: center">
+				
+					<div style="width:30%; color:gray; font-size:18px; padding-top:6px">
+						<img src="{{url_for('static', filename="simbolos/eye.png")}}" style="width:15px; height:25px; opacity:0.5"  alt="eyes"/>
+						{{ txt['pg_bsq_avan_vistas'] }}  
+					</div>
+					
+					<div style="width:70%; color:#469595; font-weight:bold; margin-top:10px">
+						<div id="v_vist_min" style="float:left; width:10%"></div>
+						<div id="slider_vist" style="float:left; width:65%; margin-left:5px; margin-right:25px"> </div>
+						<div id="v_vist_max" style="float:left; width:15%"></div>
+					</div>
+
+				</div>
+				
+				
+				<div style="width:500px; height:60px; display:flex; align-items: center">
+				
+					<div style="width:30%; color:gray; font-size:18px; padding-top:6px">
+						<img src="{{url_for('static', filename="simbolos/star.png")}}" style="width:15px; height:25px; opacity:0.5"  alt="star"/>
+						{{ txt['pg_bsq_avan_stars'] }}   
+					</div>
+					
+					<div style="width:70%; color:#469595; font-weight:bold; margin-top:10px">
+						<div id="v_star_min" style="float:left; width:10%"></div>
+						<div id="slider_star" style="float:left; width:65%; margin-left:5px; margin-right:25px"> </div>
+						<div id="v_star_max" style="float:left; width:15%"></div>
+					</div>
+
+				</div>
+				
+				
+				<div style="width:500px; height:60px; display:flex; align-items: center">
+				
+					<div style="width:30%; color:gray; font-size:18px; padding-top:6px"> 
+						<img src="{{url_for('static', filename="simbolos/comment.png")}}" style="width:15px; height:25px; opacity:0.5" alt="comment"/>
+						{{ txt['pg_bsq_avan_comment'] }}  
+					</div>
+					
+					<div style="width:70%; color:#469595; font-weight:bold; margin-top:10px; vertical-align:botto">
+						<div id="v_comm_min" style="float:left; width:10%"></div>
+						<div id="slider_comm" style="float:left; width:65%; margin-left:5px; margin-right:25px"> </div>
+						<div id="v_comm_max" style="float:left; width:15%"></div>
+					</div>
+
+				</div>			
+				
+
+			</div>
+			
+			<div style="float:left; margin-left:25px; text-align:left; width:500px; height:300px">
+				<h3> {{ txt['pg_bsq_avan_en_retrogaming'] }}  </h3>
+				<hr/>
+				
+				<div style="width:500px; color:gray; height:60px; display:flex; align-items: center">
+				
+					<div style="width:30%; font-size:18px; padding-top:6px">
+						<img src="{{url_for('static', filename="simbolos/star_llena.png")}}" style="width:15px; height:25px; opacity:0.5"  alt="eyes"/>
+						{{ txt['pg_bsq_avan_valor'] }}    
+					</div>
+					
+					<div style="width:70%; color:#469595; font-weight:bold; margin-top:10px">
+						<div id="v_valo_min" style="float:left; width:10%"></div>
+						<div id="slider_valo" style="float:left; width:65%; margin-left:5px; margin-right:25px"> </div>
+						<div id="v_valo_max" style="float:left; width:15%"></div>
+					</div>
+
+				</div>
+				
+				<div style="width:500px; color:gray; height:60px; display:flex; align-items: center">
+				
+					<div style="width:30%; font-size:18px; padding-top:6px">
+						<img src="{{url_for('static', filename="simbolos/star_vacia.png")}}" style="width:15px; height:25px; opacity:0.5"  alt="eyes"/>
+						{{ txt['pg_bsq_avan_media'] }}    
+					</div>
+					
+					<div style="width:70%; color:#469595; font-weight:bold; margin-top:10px">
+						<div id="v_medi_min" style="float:left; width:10%"></div>
+						<div id="slider_medi" style="float:left; width:65%; margin-left:5px; margin-right:25px"> </div>
+						<div id="v_medi_max" style="float:left; width:15%"></div>
+					</div>
+
+				</div>
+
+				
+				<div style="width:500px; height:60px; display:flex; align-items: center">
+				
+					<div style="width:30%; color:gray; font-size:18px; padding-top:6px">
+						<img src="{{url_for('static', filename="simbolos/user2.png")}}" style="width:15px; height:25px; opacity:0.5"  alt="eyes"/>
+						{{ txt['pg_bsq_avan_jugadores'] }}    
+					</div>
+					
+					<div style="width:70%; color:#469595; font-weight:bold; margin-top:10px">
+						<div id="v_juga_min" style="float:left; width:10%"></div>
+						<div id="slider_juga" style="float:left; width:65%; margin-left:5px; margin-right:25px"> </div>
+						<div id="v_juga_max" style="float:left; width:15%"></div>
+					</div>
+
+				</div>	
+
+				
+				<input style="display:none" name="valo_min" id="valo_min" type "text">
+				<input style="display:none" name="valo_max" id="valo_max" type "text">
+				<input style="display:none" name="vist_min" id="vist_min" type "text">
+				<input style="display:none" name="vist_max" id="vist_max" type "text">
+				<input style="display:none" name="star_min" id="star_min" type "text">
+				<input style="display:none" name="star_max" id="star_max" type "text">
+				<input style="display:none" name="comm_min" id="comm_min" type "text">
+				<input style="display:none" name="comm_max" id="comm_max" type "text">
+				<input style="display:none" name="medi_min" id="medi_min" type "text">
+				<input style="display:none" name="medi_max" id="medi_max" type "text">
+				<input style="display:none" name="juga_min" id="juga_min" type "text">
+				<input style="display:none" name="juga_max" id="juga_max" type "text">
+				
+			</div>
+			
+			<div style="float:left; text-align:left; width:55%">
+				<hr/>
+				<h4> {{ txt['pg_bsq_avan_de_los_jugados'] }}  </h4>
+				<span style="color:#BDBDBD">
+					<input type="radio" name="jugados" value="todos" checked> {{ txt['pg_bsq_avan_jgd_todos'] }}   <br>
+					<input type="radio" name="jugados" value="si_jugados"> {{ txt['pg_bsq_avan_jgd_si'] }}      <br>
+					<input type="radio" name="jugados" value="no_jugados"> {{ txt['pg_bsq_avan_jgd_no'] }}  
+				</span>
+			</div>
+
+			<div style="float:left; text-align:left; width:20%">
+				<hr/>
+				<h4>{{ txt['pg_bsq_avan_por_palabra'] }}  </h4>
+				<input class="form-control mr-sm-2" placeholder={{ txt['menu_busqueda'] }} type="text" name="q" id="q">
+			</div>
+				
+			<div style="float:left; text-align:center; width:25%">
+				<hr/>
+				<input style="vertical-align:bottom" type="submit" class="btn btn-light" value={{ txt['pg_bsq_avan_enviar'] }}  >
+			</div>			
+			
+		</form>
+		
+	</div>
+	
+	
+	<script>
+		$(document).ready(function(){
+			var form = document.forms['busqueda_av']
+			
+			// -- Vistas
+			var slider_vist = document.getElementById('slider_vist');
+			noUiSlider.create(slider_vist, {
+				start: [ {{ limites_busq['vist_min'] }} , {{ limites_busq['vist_max'] }} ],
+				step: 1,
+				connect: true,
+				range: {
+					'min': {{ limites_busq['vist_min'] }},
+					'max': {{ limites_busq['vist_max'] }}
+				}
+			});	
+						
+			document.getElementById("v_vist_min").innerHTML = Number(slider_vist.noUiSlider.get()[0]).toFixed(0);
+			document.getElementById("v_vist_max").innerHTML = Number(slider_vist.noUiSlider.get()[1]).toFixed(0);
+			form["vist_min"].value = Number(slider_vist.noUiSlider.get()[0]);
+			form["vist_max"].value = Number(slider_vist.noUiSlider.get()[1]);
+			
+			document.getElementById('slider_vist').addEventListener('click', function () {
+				document.getElementById("v_vist_min").innerHTML = Number(slider_vist.noUiSlider.get()[0]).toFixed(0);
+				document.getElementById("v_vist_max").innerHTML = Number(slider_vist.noUiSlider.get()[1]).toFixed(0);
+				form["vist_min"].value = Number(slider_vist.noUiSlider.get()[0]).toFixed(0);
+				form["vist_max"].value = Number(slider_vist.noUiSlider.get()[1]).toFixed(0);
+			});
+			
+			// -- Stars
+			var slider_star = document.getElementById('slider_star');
+			noUiSlider.create(slider_star, {
+				start: [{{ limites_busq['star_min'] }}, {{ limites_busq['star_max'] }}],
+				step: 1,
+				connect: true,
+				range: {
+					'min': {{ limites_busq['star_min'] }},
+					'max': {{ limites_busq['star_max'] }}
+				}
+			});	
+						
+			document.getElementById("v_star_min").innerHTML = Number(slider_star.noUiSlider.get()[0]).toFixed(0); 
+			document.getElementById("v_star_max").innerHTML = Number(slider_star.noUiSlider.get()[1]).toFixed(0);
+			form["star_min"].value = Number(slider_star.noUiSlider.get()[0]).toFixed(0);
+			form["star_max"].value = Number(slider_star.noUiSlider.get()[1]).toFixed(0);
+			
+			document.getElementById('slider_star').addEventListener('click', function () {
+				document.getElementById("v_star_min").innerHTML = Number(slider_star.noUiSlider.get()[0]).toFixed(0);
+				document.getElementById("v_star_max").innerHTML = Number(slider_star.noUiSlider.get()[1]).toFixed(0);
+				form["star_min"].value = Number(slider_star.noUiSlider.get()[0]).toFixed(0);
+				form["star_max"].value = Number(slider_star.noUiSlider.get()[1]).toFixed(0);			
+			});
+			
+			// -- Comments
+			var slider_comm = document.getElementById('slider_comm');
+			noUiSlider.create(slider_comm, {
+				start: [{{ limites_busq['comm_min'] }}, {{ limites_busq['comm_max'] }}],
+				step: 1,
+				connect: true,
+				range: {
+					'min': {{ limites_busq['comm_min'] }},
+					'max': {{ limites_busq['comm_max'] }}
+				}
+			});	
+						
+			document.getElementById("v_comm_min").innerHTML = Number(slider_comm.noUiSlider.get()[0]).toFixed(0); 
+			document.getElementById("v_comm_max").innerHTML = Number(slider_comm.noUiSlider.get()[1]).toFixed(0);
+			form["comm_min"].value = Number(slider_comm.noUiSlider.get()[0]).toFixed(0);
+			form["comm_max"].value = Number(slider_comm.noUiSlider.get()[1]).toFixed(0);
+			
+			document.getElementById('slider_comm').addEventListener('click', function () {
+				document.getElementById("v_comm_min").innerHTML = Number(slider_comm.noUiSlider.get()[0]).toFixed(0);
+				document.getElementById("v_comm_max").innerHTML = Number(slider_comm.noUiSlider.get()[1]).toFixed(0);
+				form["comm_min"].value = Number(slider_comm.noUiSlider.get()[0]).toFixed(0);
+				form["comm_max"].value = Number(slider_comm.noUiSlider.get()[1]).toFixed(0);					
+			});
+			
+			// -- Valoración
+			var slider_valo = document.getElementById('slider_valo');
+			noUiSlider.create(slider_valo, {
+				start: [{{ limites_busq['valo_min'] }}, {{ limites_busq['valo_max'] }}],
+				step: 1,
+				connect: true,
+				range: {
+					'min': {{ limites_busq['valo_min'] }},
+					'max': {{ limites_busq['valo_max'] }}
+				}
+			});	
+						
+			document.getElementById("v_valo_min").innerHTML = Number(slider_valo.noUiSlider.get()[0]).toFixed(0); 
+			document.getElementById("v_valo_max").innerHTML = Number(slider_valo.noUiSlider.get()[1]).toFixed(0);
+			form["valo_min"].value = Number(slider_valo.noUiSlider.get()[0]).toFixed(0);
+			form["valo_max"].value = Number(slider_valo.noUiSlider.get()[1]).toFixed(0);
+			
+			document.getElementById('slider_valo').addEventListener('click', function () {
+				document.getElementById("v_valo_min").innerHTML = Number(slider_valo.noUiSlider.get()[0]).toFixed(0);
+				document.getElementById("v_valo_max").innerHTML = Number(slider_valo.noUiSlider.get()[1]).toFixed(0);
+				form["valo_min"].value = Number(slider_valo.noUiSlider.get()[0]).toFixed(0);
+				form["valo_max"].value = Number(slider_valo.noUiSlider.get()[1]).toFixed(0);					
+			});				
+
+			// -- Media
+			var slider_medi = document.getElementById('slider_medi');
+			noUiSlider.create(slider_medi, {
+				start: [{{ limites_busq['medi_min'] }}, {{ limites_busq['medi_max'] }}],
+				step: 1,
+				connect: true,
+				range: {
+					'min': {{ limites_busq['medi_min'] }},
+					'max': {{ limites_busq['medi_max'] }}
+				}
+			});	
+						
+			document.getElementById("v_medi_min").innerHTML = Number(slider_medi.noUiSlider.get()[0]).toFixed(0); 
+			document.getElementById("v_medi_max").innerHTML = Number(slider_medi.noUiSlider.get()[1]).toFixed(0);
+			form["medi_min"].value = Number(slider_medi.noUiSlider.get()[0]).toFixed(0);
+			form["medi_max"].value = Number(slider_medi.noUiSlider.get()[1]).toFixed(0);
+			
+			document.getElementById('slider_medi').addEventListener('click', function () {
+				document.getElementById("v_medi_min").innerHTML = Number(slider_medi.noUiSlider.get()[0]).toFixed(0);
+				document.getElementById("v_medi_max").innerHTML = Number(slider_medi.noUiSlider.get()[1]).toFixed(0);
+				form["medi_min"].value = Number(slider_medi.noUiSlider.get()[0]).toFixed(0);
+				form["medi_max"].value = Number(slider_medi.noUiSlider.get()[1]).toFixed(0);					
+			});		
+
+			// -- Jugados
+			var slider_juga = document.getElementById('slider_juga');
+			noUiSlider.create(slider_juga, {
+				start: [{{ limites_busq['juga_min'] }}, {{ limites_busq['juga_max'] }}],
+				step: 1,
+				connect: true,
+				range: {
+					'min': {{ limites_busq['juga_min'] }},
+					'max': {{ limites_busq['juga_max'] }}
+				}
+			});	
+						
+			document.getElementById("v_juga_min").innerHTML = Number(slider_juga.noUiSlider.get()[0]).toFixed(0);
+			document.getElementById("v_juga_max").innerHTML = Number(slider_juga.noUiSlider.get()[1]).toFixed(0);
+			form["juga_min"].value = Number(slider_juga.noUiSlider.get()[0]).toFixed(0);
+			form["juga_max"].value = Number(slider_juga.noUiSlider.get()[1]).toFixed(0);
+			
+			document.getElementById('slider_juga').addEventListener('click', function () {
+				document.getElementById("v_juga_min").innerHTML = Number(slider_juga.noUiSlider.get()[0]).toFixed(0);
+				document.getElementById("v_juga_max").innerHTML = Number(slider_juga.noUiSlider.get()[1]).toFixed(0);
+				form["juga_min"].value = Number(slider_juga.noUiSlider.get()[0]).toFixed(0);
+				form["juga_max"].value = Number(slider_juga.noUiSlider.get()[1]).toFixed(0);
+			});			
+			
+
+		});
+		
+	</script>
+	
+	
+{% endblock %}
+
+

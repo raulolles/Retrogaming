@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block menu %}
+	{% include 'menu.html' %}
+{% endblock %}
+
+{% block app_content %}
+
+	<div class="pager">
+		<div style="float:left; background-color: #f8f8f8; padding-left:25px; text-align:left; padding-right:25px; color:gray; width:30%">
+			<h2 style="text-align:center"> {{ txt['introd_1'] }} </h2>
+			<h3 style="text-align:center"> {{ txt['introd_2'] }} </h3>
+			<hr/>
+			<h4> {{ txt['introd_3'] }} </h4>
+			<p> {{ txt['introd_4'] }} </p>
+			<p> {{ txt['introd_5'] }} </p>
+			<p style="font-size:12px"> {{ txt['introd_6'] }} </p>
+		
+		</div>
+		
+		<div style="float:left; width:35%; padding-left:25px; padding-right:25px">
+			<h2>{{ txt['pg_login_iniciar_sesion'] }}</h2>
+			<br/>
+			
+			<form action="" method="post" novalidate>
+				{{ form.hidden_tag() }}
+				<p>
+					<span style="font-weight:bold; font-size:15px">  {{ txt['pg_login_usuario'] }}</span> 
+					<span style="color:gray; font-family:Courier; font-size:10px; font-style:italic"> user[0-999]</span><br>
+					{{ form.username(size=32) }}<br>
+					{% for error in form.username.errors %}
+					<span id="error1" style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+				</p>
+				<p>
+					<span style="font-weight:bold; font-size:15px">  {{ txt['pg_login_contras'] }} </span>
+					<span style="color:gray; font-family:Courier; font-size:10px; font-style:italic"> parola</span><br>
+					{{ form.password(size=32) }}<br>
+					{% for error in form.password.errors %}
+					<span id="error2" style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+				</p>
+				<p>{{ form.remember_me() }} {{ txt['pg_login_recordarme'] }}</p>
+				<p id='submit2'>{{ form.submit() }}</p>
+			</form>
+			
+			<br/>
+			<p>{{ txt['pg_login_nuevo_user'] }} <a href="{{ url_for('register') }}">{{ txt['pg_login_click_reg'] }}</a></p>
+		</div>
+
+		<div style="float:right; width:30%">
+			<img src="{{url_for('static', filename="imagenes/pac_man.png")}}" style="width:100%; opacity:0.6; margin-top:30px" alt="pac_man"/>		
+		</div>		
+		
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+	
+	<script>
+		$(img_bandera).ready(function(){
+			var bandera = 'static/banderas/' + '{{ txt['sesion_leng'] }}' + '.png'
+			document.getElementById('img_bandera').src = bandera ;
+		});
+	</script>
+	
+	<script>
+		$(submit2).ready(function(){
+			document.querySelector('#submit').value = '{{ txt['pg_login_iniciar'] }}' ;
+			if ($('#error1').length != 0) {
+				document.querySelector('#error1').innerHTML  = '{{ txt['pg_login_error1'] }}' ;
+			}
+			if ($('#error2').length != 0) {
+				document.querySelector('#error2').innerHTML  = '{{ txt['pg_login_error1'] }}' ;
+			}
+			if ($('#men_error_base').length != 0) {
+				if (document.querySelector('#men_error_base').innerHTML == 'Please log in to access this page.'){
+					document.querySelector('#men_error_base').innerHTML  = '{{ txt['pg_login_men_error_base'] }}' ;
+				}
+			}		
+		});
+	</script>
+	
+	<script type="text/javascript">
+		function muestraJuego(jgo){
+			capa = document.getElementById("capaJuego");
+			capa.style.display='block'
+			window.scroll(0,300);
+		}
+	</script>
+	
+	<script>
+		function escondeJuego(){
+			capa = document.getElementById("capaJuego");
+			capa.style.display='none';
+		}
+	</script>	
+	
+	<div id="capaJuego" style="display:none">
+		<hr/>
+		<iframe height="500px" width="100%" name="iframe_a" title="zona de juego" style = "background-color: #f8f8f8; box-shadow: 3px 3px 15px gray"></iframe>
+
+		<div style="float:right; vertical-align:top; margin-top:10px">
+			<button type="button" class="btn btn-default" aria-label="Left Align" onClick="escondeJuego()">
+				<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> Cerrar Juego
+			</button>
+		</div>	
+
+	</div>
+	
+	<div style= "margin-top:50px">
+		{% include 'include_juegos_lista.html' %}
+	</div>
+	
+{% endblock %}
