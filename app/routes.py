@@ -11,18 +11,20 @@ from app.internalizacion.lenguajes import carga_dicc_lenguaje
 import copy
 
 selec = list()
+selec_index = list()
+selec_favoritos = list()
 origen_datos = "app/static/datos/"
 
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-	global selec
+	global selec_index
 	txt = control_lenguaje(request.args)
 	id_user = current_user.id - 1
 	select_modelos, select_users, select_juegos = select_predicciones(origen_datos, id_user)
 	selecciones = [{'filtro': txt['pg_ind_tit_selec_modelos'], 'select':select_modelos}, {'filtro': txt['pg_ind_tit_selec_usuarios'], 'select':select_users}, {'filtro': txt['pg_ind_tit_selec_productos'], 'select':select_juegos}]
-	selec = selecciones
+	selec_index = selecciones
 	return redirect(url_for('index2'))
 
 @app.route('/index2', methods=['GET', 'POST'])
@@ -31,7 +33,7 @@ def index2():
 	txt = control_lenguaje(request.args,'index')
 	jg_ifrm = control_parametros(request.args)
 	texto = txt['pg_ind_text']
-	return render_template('index.html', txt=txt, title='Home', selecciones=selec, texto_cab=texto, jg_ifrm=jg_ifrm)
+	return render_template('index.html', txt=txt, title='Home', selecciones=selec_index, texto_cab=texto, jg_ifrm=jg_ifrm)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -58,12 +60,12 @@ def login():
 @app.route('/favoritos', methods=['GET', 'POST'])
 @login_required
 def favoritos():
-		global selec
+		global selec_favoritos
 		txt = control_lenguaje(request.args)
 		id_user = current_user.id - 1
 		select_fav = select_favoritos(origen_datos, id_user)
 		selecciones =[{'filtro':txt['pg_ind_tit_selec_favoritos'], 'select':select_fav}]
-		selec = selecciones
+		selec_favoritos = selecciones
 		return redirect(url_for('favoritos2'))
 
 
@@ -75,7 +77,7 @@ def favoritos2():
 	texto = txt['pg_ind_text_favoritos']
 
 	page = request.args.get('page', 1, type=int)
-	next_url, prev_url, inic_url, fin_url, total_pag, selecciones = calc_paginacion(page, selec, 'favoritos2')
+	next_url, prev_url, inic_url, fin_url, total_pag, selecciones = calc_paginacion(page, selec_favoritos, 'favoritos2')
 	return render_template('index.html', txt=txt, title='Favoritos', selecciones=selecciones, texto_cab=texto, next_url=next_url, prev_url=prev_url, inic_url=inic_url, fin_url=fin_url, pag=page, total_pag=total_pag, jg_ifrm=jg_ifrm)
 
 
@@ -592,16 +594,16 @@ def control_lenguaje(param, origen=None):
 	return carga_dicc_lenguaje(session['lenguaje'])
 
 
-def calc_paginacion(page, selec, origen):
+def calc_paginacion(page, selec_org, origen):
 	inc_selec = (page-1)*app.config['SEL_POR_PAG']
 	fin_selec = page*app.config['SEL_POR_PAG']
-	selecciones = copy.deepcopy(selec)
-	selecciones[0]['select'] = selec[0]['select'][inc_selec: fin_selec]
+	selecciones = copy.deepcopy(selec_org)
+	selecciones[0]['select'] = selec_org[0]['select'][inc_selec: fin_selec]
 
-	if len(selec[0]['select']) % app.config['SEL_POR_PAG'] == 0:
-		total_pag = len(selec[0]['select']) // app.config['SEL_POR_PAG']
+	if len(selec_org[0]['select']) % app.config['SEL_POR_PAG'] == 0:
+		total_pag = len(selec_org[0]['select']) // app.config['SEL_POR_PAG']
 	else:
-		total_pag = len(selec[0]['select']) // app.config['SEL_POR_PAG'] + 1
+		total_pag = len(selec_org[0]['select']) // app.config['SEL_POR_PAG'] + 1
 
 	if page > 1:
 		pag_ante = page - 1
