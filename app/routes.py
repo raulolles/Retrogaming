@@ -597,16 +597,16 @@ def control_lenguaje(param, origen=None):
 	return carga_dicc_lenguaje(session['lenguaje'])
 
 
-def calc_paginacion(page, selec, origen):
+def calc_paginacion(page, selec_prm, origen):
 	inc_selec = (page-1)*app.config['SEL_POR_PAG']
 	fin_selec = page*app.config['SEL_POR_PAG']
-	selecciones = copy.deepcopy(selec)
-	selecciones[0]['select'] = selec[0]['select'][inc_selec: fin_selec]
+	selecciones = copy.deepcopy(selec_prm)
+	selecciones[0]['select'] = selec_prm[0]['select'][inc_selec: fin_selec]
 
-	if len(selec[0]['select']) % app.config['SEL_POR_PAG'] == 0:
-		total_pag = len(selec[0]['select']) // app.config['SEL_POR_PAG']
+	if len(selec_prm[0]['select']) % app.config['SEL_POR_PAG'] == 0:
+		total_pag = len(selec_prm[0]['select']) // app.config['SEL_POR_PAG']
 	else:
-		total_pag = len(selec[0]['select']) // app.config['SEL_POR_PAG'] + 1
+		total_pag = len(selec_prm[0]['select']) // app.config['SEL_POR_PAG'] + 1
 
 	if page > 1:
 		pag_ante = page - 1
