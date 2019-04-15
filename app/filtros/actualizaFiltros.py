@@ -31,8 +31,8 @@ def actualiza_filtros():
 
 def actualiza_yr(juego, user, valor):
 	# Importa Matrices
-	Y = np.load('app\static\datos\Y.npy')
-	R = np.load('app\static\datos\R.npy')
+	Y = np.load('app/static/datos/Y.npy')
+	R = np.load('app/static/datos/R.npy')
 
 	if valor == '--' :
 		valor = 0
@@ -45,5 +45,5 @@ def actualiza_yr(juego, user, valor):
 		R[juego,user] = 1
 
 	# Guarda tablas actualizadas
-	np.save('app\static\datos\Y', Y)
-	np.save('app\static\datos\R', R)
+	np.save('app/static/datos/Y', Y)
+	np.save('app/static/datos/R', R)
