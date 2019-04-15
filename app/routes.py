@@ -515,7 +515,6 @@ def register():
 		user = User(username=form.username.data, email=form.email.data, avatar=avatar)
 		user.set_password(form.password.data)
 
-		# Actuliza las tablas e Insercción en BD
 		actualiza_filtros()
 		db.session.add(user)
 		db.session.commit()
