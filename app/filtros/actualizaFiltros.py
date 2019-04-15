@@ -2,11 +2,11 @@ import numpy as np
 
 def actualiza_filtros():
 	# Importa Matrices
-	Y = np.load('app/static/datos/Y.npy')
-	R = np.load('app/static/datos/R.npy')
-	p_modelos = np.load('app/static/datos/P_Modelos.npy')
-	p_mem_users = np.load('app/static/datos/P_Mem_Users.npy')
-	p_mem_juegos = np.load('app/static/datos/P_Mem_Juegos.npy')
+	Y = np.load('app\static\datos\Y.npy')
+	R = np.load('app\static\datos\R.npy')
+	p_modelos = np.load('app\static\datos\P_Modelos.npy')
+	p_mem_users = np.load('app\static\datos\P_Mem_Users.npy')
+	p_mem_juegos = np.load('app\static\datos\P_Mem_Juegos.npy')
 
 	n_juegos = Y.shape[0]
 
@@ -22,17 +22,17 @@ def actualiza_filtros():
 	R = np.concatenate((R,ceros.T), axis=1)
 
 	# Guarda tablas actualizadas
-	np.save('app/static/datos/Y', Y)
-	np.save('app/static/datos/R', R)
-	np.save('app/static/datos/P_Modelos', p_modelos)
-	np.save('app/static/datos/P_Mem_Users', p_mem_users)
-	np.save('app/static/datos/P_Mem_Juegos', p_mem_juegos)
+	np.save('app\static\datos\Y', Y)
+	np.save('app\static\datos\R', R)
+	np.save('app\static\datos\P_Modelos', p_modelos)
+	np.save('app\static\datos\P_Mem_Users', p_mem_users)
+	np.save('app\static\datos\P_Mem_Juegos', p_mem_juegos)
 
 
 def actualiza_yr(juego, user, valor):
 	# Importa Matrices
-	Y = np.load('app/static/datos/Y.npy')
-	R = np.load('app/static/datos/R.npy')
+	Y = np.load('app\static\datos\Y.npy')
+	R = np.load('app\static\datos\R.npy')
 
 	if valor == '--' :
 		valor = 0
@@ -45,5 +45,5 @@ def actualiza_yr(juego, user, valor):
 		R[juego,user] = 1
 
 	# Guarda tablas actualizadas
-	np.save('app/static/datos/Y', Y)
-	np.save('app/static/datos/R', R)
+	np.save('app\static\datos\Y', Y)
+	np.save('app\static\datos\R', R)
