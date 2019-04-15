@@ -455,6 +455,7 @@ def mas_comments_archive2_no_jugado():
 def busqueda():
 	global selec
 	selec.clear()
+	print("------->  ---> clear dicc", selec)
 	txt = control_lenguaje(request.args)
 	id_user = current_user.id - 1
 	palabra_busq = request.args.get('q')
