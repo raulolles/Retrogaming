@@ -454,6 +454,7 @@ def mas_comments_archive2_no_jugado():
 @login_required
 def busqueda():
 	global selec
+	selec.clear()
 	txt = control_lenguaje(request.args)
 	id_user = current_user.id - 1
 	palabra_busq = request.args.get('q')
