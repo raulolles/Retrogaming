@@ -19,7 +19,6 @@ origen_datos = "app/static/datos/"
 # Si el usuario está logeado selecciona ofertas
 def index():
 	global selec
-	selec.clear()
 	txt = control_lenguaje(request.args)
 	id_user = current_user.id - 1
 	select_modelos, select_users, select_juegos = select_predicciones(origen_datos, id_user)
@@ -63,7 +62,6 @@ def login():
 # Si el usuario está logeado selecciona ofertas
 def favoritos():
 		global selec
-		selec.clear()
 		txt = control_lenguaje(request.args)
 		id_user = current_user.id - 1
 		select_fav = select_favoritos(origen_datos, id_user)
@@ -458,7 +456,6 @@ def mas_comments_archive2_no_jugado():
 @login_required
 def busqueda():
 	global selec
-	selec.clear()
 	txt = control_lenguaje(request.args)
 	id_user = current_user.id - 1
 	palabra_busq = request.args.get('q')
