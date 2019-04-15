@@ -16,7 +16,6 @@ origen_datos = "app/static/datos/"
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
-# Si el usuario está logeado selecciona ofertas
 def index():
 	global selec
 	txt = control_lenguaje(request.args)
@@ -28,7 +27,6 @@ def index():
 
 @app.route('/index2', methods=['GET', 'POST'])
 @login_required
-# Si el usuario está logeado selecciona ofertas
 def index2():
 	txt = control_lenguaje(request.args,'index')
 	jg_ifrm = control_parametros(request.args)
@@ -59,7 +57,6 @@ def login():
 
 @app.route('/favoritos', methods=['GET', 'POST'])
 @login_required
-# Si el usuario está logeado selecciona ofertas
 def favoritos():
 		global selec
 		txt = control_lenguaje(request.args)
@@ -72,7 +69,6 @@ def favoritos():
 
 @app.route('/favoritos2', methods=['GET', 'POST'])
 @login_required
-# Si el usuario está logeado selecciona ofertas
 def favoritos2():
 	txt = control_lenguaje(request.args, 'favoritos')
 	jg_ifrm = control_parametros(request.args)
