@@ -5,8 +5,8 @@ Filtro Colaborativo basodo en Productos
 import numpy as np
 
 # Carga datos inicales - Matrices Y - R
-y = np.load('..\static\datos\Y.npy')
-r = np.load('..\static\datos\R.npy')
+y = np.load('../static/datos/Y.npy')
+r = np.load('../static/datos/R.npy')
 n_juegos,n_users = y.shape
 
 # Crea matriz similitud (Coef.Corr.Pearson)

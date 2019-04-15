@@ -6,8 +6,8 @@ import numpy as np
 import sys
 
 # Importa Matrices
-Y = np.load('..\static\datos\Y.npy')
-R = np.load('..\static\datos\R.npy')
+Y = np.load('../static/datos/Y.npy')
+R = np.load('../static/datos/R.npy')
 
 '''
 juego = sys.argv[1]
@@ -29,8 +29,8 @@ else:
     R[juego, user] = 1
 
 # Guarda tablas actualizadas
-np.save('..\static\datos\Y', Y)
-np.save('..\static\datos\R', R)
+np.save('../static/datos/Y', Y)
+np.save('../static/datos/R', R)
 
 
 print (juego, user)

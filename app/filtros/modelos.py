@@ -46,8 +46,8 @@ def cofi_cost_func_minimize(parameters):
 
 
 # Carga datos inicales - Matrices Y - R
-y = np.load('..\static\datos\Y.npy')
-r = np.load('..\static\datos\R.npy')
+y = np.load('../static/datos/Y.npy')
+r = np.load('../static/datos/R.npy')
 
 n_juegos,n_users = y.shape
 n_feat = 10
