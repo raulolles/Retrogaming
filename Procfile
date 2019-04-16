@@ -1,1 +1,1 @@
-web: flask db upgrade; gunicorn retrogaming:app
+web: flask db upgrade; gunicorn -w 1 retrogaming:app
