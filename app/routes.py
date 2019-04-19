@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, session, request
+from flask import render_template, flash, redirect, url_for, session, request, json
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
@@ -18,27 +18,27 @@ origen_datos = "app/static/datos/"
 @login_required
 # Si el usuario está logeado selecciona ofertas
 def index():
-	global selec
-	txt = control_lenguaje(request.args)
+	txt, slc = control_lenguaje(request.args)
 	id_user = current_user.id - 1
 	select_modelos, select_users, select_juegos = select_predicciones(origen_datos, id_user)
 	selecciones = [{'filtro': txt['pg_ind_tit_selec_modelos'], 'select':select_modelos}, {'filtro': txt['pg_ind_tit_selec_usuarios'], 'select':select_users}, {'filtro': txt['pg_ind_tit_selec_productos'], 'select':select_juegos}]
-	selec = selecciones
-	return redirect(url_for('index2'))
+
+	return redirect(url_for('index2'), slc=selecciones)
 
 @app.route('/index2', methods=['GET', 'POST'])
 @login_required
 # Si el usuario está logeado selecciona ofertas
 def index2():
-	txt = control_lenguaje(request.args,'index')
-	jg_ifrm = control_parametros(request.args)
+	slc = request.args.get('slc')
+	txt, slc = control_lenguaje(request.args,'index', slc)
+	jg_ifrm, slc = control_parametros(request.args, slc)
 	texto = txt['pg_ind_text']
-	return render_template('index.html', txt=txt, title='Home', selecciones=selec, texto_cab=texto, jg_ifrm=jg_ifrm)
+	return render_template('index.html', txt=txt, title='Home', slc=slc, texto_cab=texto, jg_ifrm=jg_ifrm)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-	txt = control_lenguaje(request.args)
+	txt, slc = control_lenguaje(request.args)
 	if current_user.is_authenticated:
 		return redirect(url_for('index'))
 	form = LoginForm()
@@ -61,26 +61,26 @@ def login():
 @login_required
 # Si el usuario está logeado selecciona ofertas
 def favoritos():
-		global selec
-		txt = control_lenguaje(request.args)
+		txt, slc = control_lenguaje(request.args)
 		id_user = current_user.id - 1
 		select_fav = select_favoritos(origen_datos, id_user)
 		selecciones =[{'filtro':txt['pg_ind_tit_selec_favoritos'], 'select':select_fav}]
-		selec = selecciones
-		return redirect(url_for('favoritos2'))
+		
+		return redirect(url_for('favoritos2', slc=selecciones))
 
 
 @app.route('/favoritos2', methods=['GET', 'POST'])
 @login_required
 # Si el usuario está logeado selecciona ofertas
 def favoritos2():
-	txt = control_lenguaje(request.args, 'favoritos')
-	jg_ifrm = control_parametros(request.args)
+	slc = request.args.get('slc')
+	txt, slc = control_lenguaje(request.args, 'favoritos', slc)
+	jg_ifrm, slc = control_parametros(request.args, slc)
 	texto = txt['pg_ind_text_favoritos']
 
 	page = request.args.get('page', 1, type=int)
-	next_url, prev_url, inic_url, fin_url, total_pag, selecciones = calc_paginacion(page, selec, 'favoritos2')
-	return render_template('index.html', txt=txt, title='Favoritos', selecciones=selecciones, texto_cab=texto, next_url=next_url, prev_url=prev_url, inic_url=inic_url, fin_url=fin_url, pag=page, total_pag=total_pag, jg_ifrm=jg_ifrm)
+	next_url, prev_url, inic_url, fin_url, total_pag, slc = calc_paginacion(page, slc, 'favoritos2')
+	return render_template('index.html', txt=txt, title='Favoritos', slc=slc, texto_cab=texto, next_url=next_url, prev_url=prev_url, inic_url=inic_url, fin_url=fin_url, pag=page, total_pag=total_pag, jg_ifrm=jg_ifrm)
 
 
 @app.route('/mas_jugados_todos', methods=['GET', 'POST'])
@@ -529,8 +529,7 @@ def register():
 	return render_template('register.html', txt=txt, title='Register', form=form)
 
 
-def control_parametros(param):
-	global selec
+def control_parametros(param, slc):
 	jg_ifrm = None
 	if param.get('juego') != None:
 		juego = int(param.get('juego'))
@@ -540,13 +539,12 @@ def control_parametros(param):
 		if param.get('jg_ifrm') != "":
 			jg_ifrm = int(param.get('jg_ifrm'))
 
-		selec = actualiza_selec(juego, valor, selec)
+		slc = actualiza_selec(juego, valor, slc)
 
-	return jg_ifrm
+	return jg_ifrm, slc
 
 
-def control_lenguaje(param, origen=None):
-	global selec
+def control_lenguaje(param, origen=None, selec=None):
 	if not 'lenguaje' in session:
 		session['lenguaje'] = 'es'
 
@@ -594,19 +592,19 @@ def control_lenguaje(param, origen=None):
 			selec[0]['filtro'] = txt['pg_ind_tit_selec_busqueda']
 
 
-	return carga_dicc_lenguaje(session['lenguaje'])
+	return carga_dicc_lenguaje(session['lenguaje']), selec
 
 
-def calc_paginacion(page, selec_prm, origen):
+def calc_paginacion(page, selec, origen):
 	inc_selec = (page-1)*app.config['SEL_POR_PAG']
 	fin_selec = page*app.config['SEL_POR_PAG']
-	selecciones = copy.deepcopy(selec_prm)
-	selecciones[0]['select'] = selec_prm[0]['select'][inc_selec: fin_selec]
+	selecciones = copy.deepcopy(selec)
+	selecciones[0]['select'] = selec[0]['select'][inc_selec: fin_selec]
 
-	if len(selec_prm[0]['select']) % app.config['SEL_POR_PAG'] == 0:
-		total_pag = len(selec_prm[0]['select']) // app.config['SEL_POR_PAG']
+	if len(selec[0]['select']) % app.config['SEL_POR_PAG'] == 0:
+		total_pag = len(selec[0]['select']) // app.config['SEL_POR_PAG']
 	else:
-		total_pag = len(selec_prm[0]['select']) // app.config['SEL_POR_PAG'] + 1
+		total_pag = len(selec[0]['select']) // app.config['SEL_POR_PAG'] + 1
 
 	if page > 1:
 		pag_ante = page - 1

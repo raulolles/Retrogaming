@@ -4,8 +4,13 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from config import Config
 from flask_bootstrap import Bootstrap
+#-----------
+from flask_json import FlaskJSON
+
 
 app = Flask(__name__)
+#---------
+json = FlaskJSON(app)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
