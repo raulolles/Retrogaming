@@ -95,6 +95,7 @@
 								<input type="text" name="jg_ifrm" id="jg_ifrm" value="" style="display:none">
 								<input type="text" name="juego" id="juego" value="{{ juego[15] }}" style="display:none">
 								<input type="text" name="user" id="user" value="{{ juego[16] }}" style="display:none">
+								<input type="text" name="selec_global" id="selec_global" value="{{ selec_global }}" style="display:none">								
 								<select onchange="this.form.submit()" name="valor" id="valor{{ juego15 }}" style="border:none">
 									<option {% if juego[14] == 0 %} selected {%endif%} value="0">--</option>
 									<option {% if juego[14] == 1 %} selected {%endif%}>1</option>

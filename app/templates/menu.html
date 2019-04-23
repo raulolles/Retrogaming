@@ -66,12 +66,13 @@
 		
                     {% endif %}
                 </ul>
-				
+
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_anonymous %}
 					<li>
 						<img id="img_bandera" style="margin-top:5px; margin-left:5px; height:18px" src="{{url_for('static', filename="avatares/circulo.png")}}" alt="bandera"/>
 						<form name="lenguaje" id="form_lenguaje1" acction="" method="GET">
+							<input type="text" name="selec_global" id="selec_global" value="{{ selec_global }}" style="display:none">								
 							<select  onchange="this.form.submit()" name="leng_cambio" id="leng_cambio" style="font-size:12px; color:gray; background-color: #f8f8f8; border:none">
 								<option {% if session['lenguaje'] == 'es' %} selected {%endif%} value="es">es</option>
 								<option {% if session['lenguaje'] == 'en' %} selected {%endif%} value="en">en</option>
@@ -91,6 +92,7 @@
 					<li>
 						<img id="img_bandera" style="margin-top:8px; margin-left:5px; height:18px" src="{{url_for('static', filename="avatares/circulo.png")}}" alt="bandera"/>
 						<form name="lenguaje" id="form_lenguaje1" acction="" method="GET">
+							<input type="text" name="selec_global" id="selec_global" value="{{ selec_global }}" style="display:none">								
 							<select  onchange="this.form.submit()" name="leng_cambio" id="leng_cambio" style="font-size:12px; color:gray; background-color: #f8f8f8; border:none">
 								<option {% if session['lenguaje'] == 'es' %} selected {%endif%} value="es">es</option>
 								<option {% if session['lenguaje'] == 'en' %} selected {%endif%} value="en">en</option>
