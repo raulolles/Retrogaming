@@ -469,7 +469,7 @@ def logout():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-	txt = control_lenguaje(request.args)
+	txt,selecciones = control_lenguaje(request.args)
 	if current_user.is_authenticated:
 		return redirect(url_for('index'))
 	form = RegistrationForm()
@@ -530,45 +530,46 @@ def control_lenguaje(param, origen=None, selec=None):
 		session['lenguaje'] = param.get('leng_cambio')
 
 		txt = carga_dicc_lenguaje(session['lenguaje'])
-		if origen == 'index':
-			selec[0][0]['filtro'] = txt['pg_ind_tit_selec_modelos']
-			selec[0][1]['filtro'] = txt['pg_ind_tit_selec_usuarios']
-			selec[0][2]['filtro'] = txt['pg_ind_tit_selec_productos']
-		elif origen == 'favoritos':
-			selec[0][0]['filtro'] = txt['pg_ind_tit_selec_favoritos']
-		elif origen == 'mas_jugados_todos':
-			selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_jugados'] + txt['pg_ind_tit_selec_todos_juegos']
-		elif origen == 'mas_jugados_ya_jugado':
-			selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_jugados'] + txt['pg_ind_tit_selec_ya_jugados']
-		elif origen == 'mas_jugado_no_jugado':
-			selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_jugados'] + txt['pg_ind_tit_selec_no_jugados']
-		elif origen == 'mejor_valorados_todos':
-			selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mejor_valorados'] + txt['pg_ind_tit_selec_todos_juegos']
-		elif origen == 'mejor_valorados_ya_jugado':
-			selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mejor_valorados'] + txt['pg_ind_tit_selec_ya_jugados']
-		elif origen == 'mejor_valorados_no_jugado':
-			selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mejor_valorados'] + txt['pg_ind_tit_selec_no_jugados']
-		elif origen == 'mas_vistos_archive_todos':
-			selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_vistos'] + txt['pg_ind_tit_selec_todos_juegos']
-		elif origen == 'mas_vistos_archive_ya_jugado':
-			selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_vistos'] + txt['pg_ind_tit_selec_ya_jugados']
-		elif origen == 'mas_vistos_archive_no_jugado':
-			selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_vistos'] + txt['pg_ind_tit_selec_no_jugados']
-		elif origen == 'mas_stars_archive_todos':
-			selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_stars'] + txt['pg_ind_tit_selec_todos_juegos']
-		elif origen == 'mas_stars_archive_ya_jugado':
-			selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_stars'] + txt['pg_ind_tit_selec_ya_jugados']
-		elif origen == 'mas_stars_archive_no_jugado':
-			selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_stars'] + txt['pg_ind_tit_selec_no_jugados']
-		elif origen == 'mas_comments_archive_todos':
-			selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_comments'] + txt['pg_ind_tit_selec_todos_juegos']
-		elif origen == 'mas_comments_archive_ya_jugado':
-			selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_comments'] + txt['pg_ind_tit_selec_ya_jugados']
-		elif origen == 'mas_comments_archive_no_jugado':
-			selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_comments'] + txt['pg_ind_tit_selec_no_jugados']
-		elif origen == 'busqueda':
-			selec[0][0]['filtro'] = txt['pg_ind_tit_selec_busqueda']
-		selec = selec[0]
+		if selec !=  None:
+			if origen == 'index':
+				selec[0][0]['filtro'] = txt['pg_ind_tit_selec_modelos']
+				selec[0][1]['filtro'] = txt['pg_ind_tit_selec_usuarios']
+				selec[0][2]['filtro'] = txt['pg_ind_tit_selec_productos']
+			elif origen == 'favoritos':
+				selec[0][0]['filtro'] = txt['pg_ind_tit_selec_favoritos']
+			elif origen == 'mas_jugados_todos':
+				selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_jugados'] + txt['pg_ind_tit_selec_todos_juegos']
+			elif origen == 'mas_jugados_ya_jugado':
+				selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_jugados'] + txt['pg_ind_tit_selec_ya_jugados']
+			elif origen == 'mas_jugado_no_jugado':
+				selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_jugados'] + txt['pg_ind_tit_selec_no_jugados']
+			elif origen == 'mejor_valorados_todos':
+				selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mejor_valorados'] + txt['pg_ind_tit_selec_todos_juegos']
+			elif origen == 'mejor_valorados_ya_jugado':
+				selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mejor_valorados'] + txt['pg_ind_tit_selec_ya_jugados']
+			elif origen == 'mejor_valorados_no_jugado':
+				selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mejor_valorados'] + txt['pg_ind_tit_selec_no_jugados']
+			elif origen == 'mas_vistos_archive_todos':
+				selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_vistos'] + txt['pg_ind_tit_selec_todos_juegos']
+			elif origen == 'mas_vistos_archive_ya_jugado':
+				selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_vistos'] + txt['pg_ind_tit_selec_ya_jugados']
+			elif origen == 'mas_vistos_archive_no_jugado':
+				selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_vistos'] + txt['pg_ind_tit_selec_no_jugados']
+			elif origen == 'mas_stars_archive_todos':
+				selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_stars'] + txt['pg_ind_tit_selec_todos_juegos']
+			elif origen == 'mas_stars_archive_ya_jugado':
+				selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_stars'] + txt['pg_ind_tit_selec_ya_jugados']
+			elif origen == 'mas_stars_archive_no_jugado':
+				selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_stars'] + txt['pg_ind_tit_selec_no_jugados']
+			elif origen == 'mas_comments_archive_todos':
+				selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_comments'] + txt['pg_ind_tit_selec_todos_juegos']
+			elif origen == 'mas_comments_archive_ya_jugado':
+				selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_comments'] + txt['pg_ind_tit_selec_ya_jugados']
+			elif origen == 'mas_comments_archive_no_jugado':
+				selec[0][0]['filtro'] = txt['pg_ind_tit_selec_mas_comments'] + txt['pg_ind_tit_selec_no_jugados']
+			elif origen == 'busqueda':
+				selec[0][0]['filtro'] = txt['pg_ind_tit_selec_busqueda']
+			selec = selec[0]
 
 	return carga_dicc_lenguaje(session['lenguaje']), selec
 
