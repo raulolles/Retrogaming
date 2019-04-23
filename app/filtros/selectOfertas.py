@@ -94,7 +94,7 @@ def select_de_matriz(y,p,r,id_user,unid_select,items):
 
 
 def select_predicciones(origen_datos, id_user):
-	unid_select = 5
+	unid_select = 4
 	y, r, p_modelos, p_mem_users, p_mem_juegos, items = importa_tablas(origen_datos)
 
 	select_users = select_de_matriz(y,p_mem_users,r,id_user,unid_select,items)
