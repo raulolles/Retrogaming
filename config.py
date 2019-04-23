@@ -10,4 +10,4 @@ class Config(object):
 	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'app.db')
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
 	SEL_TOTAL = 50
-	SEL_POR_PAG = 6
+	SEL_POR_PAG = 4
