@@ -125,7 +125,7 @@ def select_aleatorio(origen_datos):
 
 
 def select_favoritos(origen_datos, id_user):
-	unid_select = 50
+	unid_select = 40
 	y, r, items = importa_tablas_2(origen_datos)
 	r0 = r[:,id_user]
 
@@ -141,7 +141,7 @@ def select_favoritos(origen_datos, id_user):
 
 
 def select_mas_jugados(origen_datos, id_user, jugado):
-	unid_select = 50
+	unid_select = 40
 	y, r, items = importa_tablas_2(origen_datos)
 	r0 = r[:,id_user]
 
@@ -155,7 +155,7 @@ def select_mas_jugados(origen_datos, id_user, jugado):
 
 
 def select_mejor_valorados(origen_datos, id_user, jugado):
-	unid_select = 50
+	unid_select = 40
 	y, r, items = importa_tablas_2(origen_datos)
 	r0 = r[:,id_user]
 
@@ -170,7 +170,7 @@ def select_mejor_valorados(origen_datos, id_user, jugado):
 
 
 def select_archive(origen_datos, id_user,columna,jugado):
-	unid_select = 50
+	unid_select = 40
 	y, r, items = importa_tablas_2(origen_datos)
 	r0 = r[:,id_user]
 
@@ -184,7 +184,7 @@ def select_archive(origen_datos, id_user,columna,jugado):
 
 
 def select_busqueda(origen_datos, id_user, palabra_busq):
-	unid_select = 50
+	unid_select = 40
 	y, r, items = importa_tablas_2(origen_datos)
 	r0 = r[:,id_user]
 
@@ -213,7 +213,7 @@ def select_busqueda(origen_datos, id_user, palabra_busq):
 	return seleccion
 
 def select_busqueda_avanz(origen_datos, id_user, param):
-	unid_select = 50
+	unid_select = 40
 	y, r, items = importa_tablas_2(origen_datos)
 	r0 = r[:,id_user]
 
