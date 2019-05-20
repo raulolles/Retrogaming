@@ -28,7 +28,7 @@ def crea_dicc_lenguajes():
 
 			'saludo':'Hola!',
 
-			'pg_login_iniciar_sesion':'Iniciar Sesion',
+			'pg_login_iniciar_sesion':'Iniciar Sesión',
 			'pg_login_usuario':'Nombre Usuario',
 			'pg_login_contras':'Contraseña',
 			'pg_login_recordarme':'Recordarme',
